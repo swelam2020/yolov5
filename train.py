@@ -376,22 +376,25 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
                                            plots=False,
                                            callbacks=callbacks,
                                            compute_loss=compute_loss)
-                run.log("results",results)
-                run.log("MAP",maps)
+                run.log("precision",float(results[0]))
+                run.log("Recall",float(results[1]))
+                run.log("MAP@0.5",float(results[2]))
+                run.log("MAP@ 0.5:0.95",float(results[3]))
+                
+                
+                
+            
 
                 
 
             # Update best mAP
             fi = fitness(np.array(results).reshape(1, -1))  # weighted combination of [P, R, mAP@.5, mAP@.5-.95]
-            run.log("fi",fi)
             
             stop = stopper(epoch=epoch, fitness=fi)  # early stop check
             if fi > best_fitness:
                 best_fitness = fi
             log_vals = list(mloss) + list(results) + lr
-            run.log("log_vals0",log_vals[0])
-            run.log("log_vals1",log_vals[1])
-            run.log("log_vals2",log_vals[2])
+         
             callbacks.run('on_fit_epoch_end', log_vals, epoch, best_fitness, fi)
 
           
