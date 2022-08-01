@@ -21,7 +21,7 @@ import time
 from copy import deepcopy
 from datetime import datetime
 from pathlib import Path
-from azureml.core import Run
+from azureml.core.run import Run
 
 import numpy as np
 import torch
@@ -60,7 +60,6 @@ from utils.torch_utils import (EarlyStopping, ModelEMA, de_parallel, select_devi
 LOCAL_RANK = int(os.getenv('LOCAL_RANK', -1))  # https://pytorch.org/docs/stable/elastic/run.html
 RANK = int(os.getenv('RANK', -1))
 WORLD_SIZE = int(os.getenv('WORLD_SIZE', 1))
-run = Run.get_context()
 
 
 def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictionary
@@ -642,5 +641,6 @@ def run(**kwargs):
 
 
 if __name__ == "__main__":
+    run = Run.get_context()
     opt = parse_opt()
     main(opt)
