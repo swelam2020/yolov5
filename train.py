@@ -386,6 +386,10 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
                 best_fitness = fi
             log_vals = list(mloss) + list(results) + lr
             callbacks.run('on_fit_epoch_end', log_vals, epoch, best_fitness, fi)
+            run.log('try11',log_vals)
+            run.log('try12',best_fitness)
+            run.log('try13',fi)
+            
 
             # Save model
             if (not nosave) or (final_epoch and not evolve):  # if save
@@ -442,9 +446,16 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
                         compute_loss=compute_loss)  # val best model with plots
                     if is_coco:
                         callbacks.run('on_fit_epoch_end', list(mloss) + list(results) + lr, epoch, best_fitness, fi)
+                        run.log('results 21',results)
+                        run.log('results 22',best_fitness)
+                        run.log('results 23',fi)
+                        
+                    run.log('results 31',results)
+                    run.log('results 32',best_fitness)
+                    run.log('results 33',fi)
+
 
         callbacks.run('on_train_end', last, best, plots, epoch, results)
-        run.log('results',results)
 
     torch.cuda.empty_cache()
     return results
