@@ -389,7 +389,9 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
             if fi > best_fitness:
                 best_fitness = fi
             log_vals = list(mloss) + list(results) + lr
-            run.log_list("log_vals",log_vals)
+            run.log("log_vals0",log_vals[0])
+            run.log("log_vals1",log_vals[1])
+            run.log("log_vals2",log_vals[2])
             callbacks.run('on_fit_epoch_end', log_vals, epoch, best_fitness, fi)
 
           
