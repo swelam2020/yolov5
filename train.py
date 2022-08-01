@@ -376,19 +376,23 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
                                            plots=False,
                                            callbacks=callbacks,
                                            compute_loss=compute_loss)
+                run.log("results",results)
+                run.log("MAP",maps)
 
                 
 
             # Update best mAP
             fi = fitness(np.array(results).reshape(1, -1))  # weighted combination of [P, R, mAP@.5, mAP@.5-.95]
+            run.log("fi",fi)
+            
             stop = stopper(epoch=epoch, fitness=fi)  # early stop check
             if fi > best_fitness:
                 best_fitness = fi
             log_vals = list(mloss) + list(results) + lr
+            run.log_list("log_vals",log_vals)
             callbacks.run('on_fit_epoch_end', log_vals, epoch, best_fitness, fi)
 
-            run.log('try12',best_fitness)
-            run.log('try13',fi)
+          
             
 
             # Save model
@@ -446,13 +450,6 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
                         compute_loss=compute_loss)  # val best model with plots
                     if is_coco:
                         callbacks.run('on_fit_epoch_end', list(mloss) + list(results) + lr, epoch, best_fitness, fi)
-                        run.log('results 21',results)
-                        run.log('results 22',best_fitness)
-                        run.log('results 23',fi)
-                        
-                    run.log('results 31',results)
-                    run.log('results 32',best_fitness)
-                    run.log('results 33',fi)
 
 
         callbacks.run('on_train_end', last, best, plots, epoch, results)
