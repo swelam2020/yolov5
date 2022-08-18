@@ -452,7 +452,7 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
                 break  # must break all DDP ranks
 
         # end epoch ----------------------------------------------------------------------------------------------------
-        mmodel = MModel.register(model_path=best,model_name="best_yolo_v5_model",tags={'area': "Ades_project_1st_phase_v3", 'type': "object detection"},description="object detection for all safety violations",workspace=ws)
+        mmodel = MModel.register(model_path=best,model_name="yolo-model-v5",tags={'area': "Ades_project_1st_phase_v3", 'type': "object detection"},description="object detection for all safety violations",workspace=ws)
 
     # end training -----------------------------------------------------------------------------------------------------
     if RANK in {-1, 0}:
