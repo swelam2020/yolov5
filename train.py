@@ -25,6 +25,7 @@ from datetime import datetime
 from pathlib import Path
 from azureml.core.run import Run
 from azureml.core.model import Model
+from azureml.core import Dataset, Datastore, Workspace
 
 import numpy as np
 import torch
