@@ -401,11 +401,11 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
             stop = stopper(epoch=epoch, fitness=fi)  # early stop check
             if fi > best_fitness:
                 best_fitness = fi
-                model = Model.register(model_path="best.pt",
-                          model_name="yolo_v5_model",
-                          tags={'area': "Ades_project_1st_phase_v3", 'type': "object detection"},
-                          description="object detection for all safety violations",
-                          workspace=ws)
+#                 model = Model.register(model_path="best.pt",
+#                           model_name="yolo_v5_model",
+#                           tags={'area': "Ades_project_1st_phase_v3", 'type': "object detection"},
+#                           description="object detection for all safety violations",
+#                           workspace=ws)
 
             log_vals = list(mloss) + list(results) + lr
          
