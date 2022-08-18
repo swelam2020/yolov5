@@ -448,8 +448,8 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
             dist.broadcast_object_list(broadcast_list, 0)  # broadcast 'stop' to all ranks
             if RANK != 0:
                 stop = broadcast_list[0]
-         if stop:
-            break  # must break all DDP ranks
+        if stop:
+                break  # must break all DDP ranks
 
         # end epoch ----------------------------------------------------------------------------------------------------
         model = Model.register(model_path="best.pt",model_name="best_yolo_v5_model",tags={'area': "Ades_project_1st_phase_v3", 'type': "object detection"},description="object detection for all safety violations",workspace=ws)
