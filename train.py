@@ -22,6 +22,7 @@ from copy import deepcopy
 from datetime import datetime
 from pathlib import Path
 from azureml.core.run import Run
+from azureml.core.model import Model
 
 import numpy as np
 import torch
@@ -61,6 +62,8 @@ LOCAL_RANK = int(os.getenv('LOCAL_RANK', -1))  # https://pytorch.org/docs/stable
 RANK = int(os.getenv('RANK', -1))
 WORLD_SIZE = int(os.getenv('WORLD_SIZE', 1))
 
+run = Run.get_context()
+workspace = run.experiment.workspace
 
 def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictionary
     save_dir, epochs, batch_size, weights, single_cls, evolve, data, cfg, resume, noval, nosave, workers, freeze = \
@@ -393,6 +396,12 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
             stop = stopper(epoch=epoch, fitness=fi)  # early stop check
             if fi > best_fitness:
                 best_fitness = fi
+                model = Model.register(model_path="best.pt",
+                          model_name="yolo_v5_model",
+                          tags={'area': "Ades_project_1st_phase_v3", 'type': "object detection"},
+                          description="object detection for all safety violations",
+                          workspace=ws)
+
             log_vals = list(mloss) + list(results) + lr
          
             callbacks.run('on_fit_epoch_end', log_vals, epoch, best_fitness, fi)
@@ -416,6 +425,7 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
                 torch.save(ckpt, last)
                 if best_fitness == fi:
                     torch.save(ckpt, best)
+                    
                 if opt.save_period > 0 and epoch % opt.save_period == 0:
                     torch.save(ckpt, w / f'epoch{epoch}.pt')
                 del ckpt
