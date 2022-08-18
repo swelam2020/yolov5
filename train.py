@@ -65,7 +65,7 @@ RANK = int(os.getenv('RANK', -1))
 WORLD_SIZE = int(os.getenv('WORLD_SIZE', 1))
 
 run = Run.get_context()
-workspace = run.experiment.workspace
+ws = Workspace.get(name="meetgaia",subscription_id='6787ffc1-4b0b-42b3-abe7-11f283a3b75f',resource_group='meetgaia_group')
 
 def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictionary
     save_dir, epochs, batch_size, weights, single_cls, evolve, data, cfg, resume, noval, nosave, workers, freeze = \
