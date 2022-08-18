@@ -15,8 +15,8 @@ Usage:
 import argparse
 import math
 import os
-os.system("pip install azureml")
-os.system("pip install azureml.core")
+# os.system("pip install azureml")
+# os.system("pip install azureml.core")
 import random
 import sys
 import time
@@ -65,11 +65,11 @@ LOCAL_RANK = int(os.getenv('LOCAL_RANK', -1))  # https://pytorch.org/docs/stable
 RANK = int(os.getenv('RANK', -1))
 WORLD_SIZE = int(os.getenv('WORLD_SIZE', 1))
 
-run = Run.get_context()
-print("I am after run line")
-#ws = Workspace.get(name="meetgaia",subscription_id='6787ffc1-4b0b-42b3-abe7-11f283a3b75f',resource_group='meetgaia_group')
-ws= run.experiment.workspace
-print("I am after ws line")
+# run = Run.get_context()
+# print("I am after run line")
+# #ws = Workspace.get(name="meetgaia",subscription_id='6787ffc1-4b0b-42b3-abe7-11f283a3b75f',resource_group='meetgaia_group')
+# ws= run.experiment.workspace
+# print("I am after ws line")
 def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictionary
     save_dir, epochs, batch_size, weights, single_cls, evolve, data, cfg, resume, noval, nosave, workers, freeze = \
         Path(opt.save_dir), opt.epochs, opt.batch_size, opt.weights, opt.single_cls, opt.evolve, opt.data, opt.cfg, \
@@ -401,11 +401,11 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
             stop = stopper(epoch=epoch, fitness=fi)  # early stop check
             if fi > best_fitness:
                 best_fitness = fi
-                model = Model.register(model_path="best.pt",
-                          model_name="yolo_v5_model",
-                          tags={'area': "Ades_project_1st_phase_v3", 'type': "object detection"},
-                          description="object detection for all safety violations",
-                          workspace=ws)
+#                 model = Model.register(model_path="best.pt",
+#                           model_name="yolo_v5_model",
+#                           tags={'area': "Ades_project_1st_phase_v3", 'type': "object detection"},
+#                           description="object detection for all safety violations",
+#                           workspace=ws)
 
             log_vals = list(mloss) + list(results) + lr
          
