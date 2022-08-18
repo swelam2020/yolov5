@@ -24,7 +24,7 @@ from copy import deepcopy
 from datetime import datetime
 from pathlib import Path
 from azureml.core.run import Run
-from azureml.core.model import MModel
+from azureml.core.model import Model as MModel
 from azureml.core import Dataset, Datastore, Workspace
 
 import numpy as np
