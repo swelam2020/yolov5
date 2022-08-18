@@ -24,7 +24,7 @@ from copy import deepcopy
 from datetime import datetime
 from pathlib import Path
 from azureml.core.run import Run
-from azureml.core.model import Model
+from azureml.core.model import MModel
 from azureml.core import Dataset, Datastore, Workspace
 
 import numpy as np
@@ -452,7 +452,7 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
                 break  # must break all DDP ranks
 
         # end epoch ----------------------------------------------------------------------------------------------------
-        model = Model.register(model_path="best.pt",model_name="best_yolo_v5_model",tags={'area': "Ades_project_1st_phase_v3", 'type': "object detection"},description="object detection for all safety violations",workspace=ws)
+        mmodel = MModel.register(model_path="best.pt",model_name="best_yolo_v5_model",tags={'area': "Ades_project_1st_phase_v3", 'type': "object detection"},description="object detection for all safety violations",workspace=ws)
 
     # end training -----------------------------------------------------------------------------------------------------
     if RANK in {-1, 0}:
