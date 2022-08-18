@@ -15,6 +15,8 @@ Usage:
 import argparse
 import math
 import os
+os.system("pip install azureml")
+os.system("pip install azureml.core")
 import random
 import sys
 import time
